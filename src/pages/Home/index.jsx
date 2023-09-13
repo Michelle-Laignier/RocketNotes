@@ -1,17 +1,23 @@
 import { Container, Brand, Menu, Search, Content, NewNote } from './styles'
 
 import { Header } from '../../components/Header'
+import { ButtonText } from '../../components/ButtonText'
 
 export function Home() {
   return(
     <Container>
-      <Brand>
+			<Brand>
 				<h1>Rocketnotes</h1>
-      </Brand>
+			</Brand>
 
 			<Header></Header>
 
-			<Menu></Menu>
+			<Menu>
+				<li><ButtonText title="Todos" $isActive/></li>
+				<li><ButtonText title="Frontend" /></li>
+				<li><ButtonText title="Node" /></li>
+				<li><ButtonText title="React" /></li>
+			</Menu>
 
 			<Search></Search>
 
