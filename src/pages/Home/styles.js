@@ -55,12 +55,41 @@ export const Menu = styled.ul`
 
 export const Search = styled.div`
     grid-area: search;
+
+    margin: 64px 64px 0;
 `
 
 export const Content = styled.div`
     grid-area: content;
+
+    margin: 36px 64px 0;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.COLORS.GRAY_300};
+        border-radius: 12px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+        border-radius: 12px;
+    }
+
+    > section {
+        display: grid;
+        row-gap: 16px;
+    }
 `
 
 export const NewNote = styled.button`
     grid-area: newnote;
+
+    align-items: center;
+    background-color: ${({ theme }) => theme.COLORS.ORANGE};
+    border: none;
+    display: flex;
+    font-size: 20px;
+    gap: 8px;
+    justify-content: center;
 `
