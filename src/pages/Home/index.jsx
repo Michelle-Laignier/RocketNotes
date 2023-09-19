@@ -1,5 +1,7 @@
 import { FiPlus } from 'react-icons/fi'
 
+import { Link } from 'react-router-dom'
+
 import { Container, Brand, Menu, Search, Content, NewNote } from './styles'
 
 import { Header } from '../../components/Header'
@@ -30,26 +32,30 @@ export function Home() {
 
 			<Content>
 				<Section title="Minhas notas">
-					<Note data={{
-						title: 'React Modal', 
-						tags: [
-							{id: '1', name: 'React'}
-						]
-					}}
-					/>
+					<Link to="/details/:01">
+						<Note data={{
+							title: 'React Modal', 
+							tags: [
+								{id: '1', name: 'React'}
+							]
+						}}
+						/>
+					</Link>
 
-					<Note data={{
-						title: 'Exemplo de Middleware', 
-						tags: [
-							{id: '1', name: 'express'},
-							{id: '2', name: 'nodejs'}
-						]
-					}}
-					/>
+					<Link to="/details/:02">
+						<Note data={{
+							title: 'Exemplo de Middleware', 
+							tags: [
+								{id: '1', name: 'express'},
+								{id: '2', name: 'nodejs'}
+							]
+						}}
+						/>
+					</Link>
 				</Section>
 			</Content>
 
-			<NewNote>
+			<NewNote to="/new">
 				<FiPlus/>
 				Criar nota
 			</NewNote>

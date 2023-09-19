@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Container, Links, Content } from "./styles"
 
 import { Header } from '../../components/Header'
@@ -43,7 +45,9 @@ export function Details() {
             <Tag title="nodejs" />
           </Section>
 
-          <Button title="Voltar"/>
+          <Link to="/">
+            <Button title="Voltar"/>
+          </Link>
         </Content>
       </main>
     </Container>
