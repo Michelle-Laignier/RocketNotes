@@ -56,7 +56,7 @@ export function SignUp() {
         <Input placeholder="Senha" type="password" required icon={FiLock} onChange={e => setPassword(e.target.value)} />
 
         <Button title="Cadastrar" onClick={handleSignUp} />
-				<Link to="/"> Voltar para o login</Link>
+				<Link to="/login"> Voltar para o login</Link>
       </Form>
     </Container>
   )
