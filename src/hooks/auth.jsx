@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 import { api } from "../services/api"
 
@@ -12,6 +12,10 @@ function AuthProvider({ children }) {
       const response = await api.post("/sessions", { email, password })
       const { user , token } = response.data
       console.log(user, token);
+
+      localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
+      localStorage.setItem("@rocketnotes:token", token)
+
       api.defaults.headers.authorization = `Bearer ${token}`
       // inserimos um token do tipo Bearer de autenticação no cabeçalho, por padrão, de todas as
       // requisições que o usuário vai fazer.
@@ -25,6 +29,27 @@ function AuthProvider({ children }) {
       }
     }
   }
+
+  useEffect(() => {
+    // o que vai ser executado após a renderização do componente
+  }, [])
+  /* [ estado que quando mudar dispara o useEffect novamente ] */
+  // no nosso caso, como não queremos deixar nenhum estado dependente a princípio, deixamos vazio.
+  // significa que vai ser recerregado uma vez depois da renderização do nosso componente.
+
+  useEffect(() => {
+    const user = localStorage.getItem("@rocketnotes:user")
+    const token = localStorage.getItem("@rocketnotes:token")
+
+    if(user && token) {
+      api.defaults.headers.authorization = `Bearer ${token}`
+
+      setData({
+        token,
+        user: JSON.parse(user)
+      })
+    }
+  }, [])
 
   return(
     <AuthContext.Provider value={{ signIn, user:data.user }}> {/* user:data.user === dados do usuário */}
