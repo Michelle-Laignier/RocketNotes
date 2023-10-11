@@ -30,6 +30,14 @@ function AuthProvider({ children }) {
     }
   }
 
+  function signOut() {
+    localStorage.removeItem("@rocketnotes:user")
+    localStorage.removeItem("@rocketnotes:token")
+
+    setData({})
+    // pra refletir nas rotas que vai mudar o estado e automaticamente sair do <AppRoutes/> e ir pro <AuthRoutes/>.
+  }
+
   useEffect(() => {
     // o que vai ser executado após a renderização do componente
   }, [])
@@ -52,7 +60,7 @@ function AuthProvider({ children }) {
   }, [])
 
   return(
-    <AuthContext.Provider value={{ signIn, user:data.user }}> {/* user:data.user === dados do usuário */}
+    <AuthContext.Provider value={{ signIn, user:data.user, signOut }}> {/* user:data.user === dados do usuário */}
       {children}
     </AuthContext.Provider>
   )
