@@ -28,6 +28,13 @@ export function New() {
 		setNewLink("") // Pra ter o estado "resetado" de novo
 	}
 
+	function handleRemoveLink(deleted) {
+		const isOk = confirm("Remover esse link?")
+		if(isOk) {
+			setLinks(prevState => prevState.filter(link => link !== deleted))
+		}
+	}
+
   return(
     <Container>
       <Header/>
@@ -48,7 +55,9 @@ export function New() {
 								<NoteItem
 								  key={String(index)} // Sempre que tem um componente renderizado por uma lista, precisa da propriedade key
 									value={link} // Pegar o valor de cada link
-									onClick={() => {}}
+									onClick={() => handleRemoveLink(link)}
+									// Quando quiser passar -parâmetros- tem que usar essa estrutura {() => {}} em vez de só {nome_da_função}
+									// Se fizer com {nome_da_função(parâmetro)} ele fica tentando executar automático
 								/>
 							))
 						}
