@@ -40,8 +40,18 @@ function AuthProvider({ children }) {
   }
 
   // Pra atualizar os dados do usuário precisamos receber os dados do usuário através de um objeto chamado user.
-  async function updateProfile({ user }) {
+  async function updateProfile({ user, avatarFile }) {
     try {
+      if(avatarFile) {
+        const fileUploadForm = new FormData() // pq precisamos enviar como um arquivo
+
+        // O back-end tá esperando receber um campo chamado avatar
+        fileUploadForm.append("avatar", avatarFile)
+
+        const response = await api.patch("/users/avatar", fileUploadForm)
+        user.avatar = response.data.avatar
+      }
+
       /*await api.put("/users", user)
       localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
       // Se a chave já existir no localStorage, usar o setItem pela segunda vez substitui o valor dela.
