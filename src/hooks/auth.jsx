@@ -16,7 +16,8 @@ function AuthProvider({ children }) {
       localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
       localStorage.setItem("@rocketnotes:token", token)
 
-      api.defaults.headers.authorization = `Bearer ${token}`
+      // o axios atualizou a forma como armazena o token:
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
       // inserimos um token do tipo Bearer de autenticação no cabeçalho, por padrão, de todas as
       // requisições que o usuário vai fazer.
       // guardamos as infos do user e do token em um estado (useState com o setData)
@@ -50,7 +51,7 @@ function AuthProvider({ children }) {
     const token = localStorage.getItem("@rocketnotes:token")
 
     if(user && token) {
-      api.defaults.headers.authorization = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
       setData({
         token,
