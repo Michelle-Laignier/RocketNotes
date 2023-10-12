@@ -10,7 +10,7 @@ function AuthProvider({ children }) {
   async function signIn({ email, password }) { /* se nã tiver {} vai ter que ser exatamente nessa ordem */
     try {
       const response = await api.post("/sessions", { email, password })
-      const { user , token } = response.data
+      const { user, token } = response.data
       console.log(user, token);
 
       localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
@@ -42,10 +42,17 @@ function AuthProvider({ children }) {
   // Pra atualizar os dados do usuário precisamos receber os dados do usuário através de um objeto chamado user.
   async function updateProfile({ user }) {
     try {
-      await api.put("/users", user)
+      /*await api.put("/users", user)
       localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
       // Se a chave já existir no localStorage, usar o setItem pela segunda vez substitui o valor dela.
-      setData({ user, token:data.token })
+      setData({ user, token:data.token })*/
+
+      // Pra senha não aparecer no localStorage:
+      const updatedUserResponse = await api.put('/users', user);
+      const updatedUser = updatedUserResponse.data;
+      localStorage.setItem('@rocketnotes:user', JSON.stringify(updatedUser));
+      setData({ user: updatedUser, token: data.token });
+
       alert("Perfil atualizado! :D")
     } catch(error) {
       if(error.response) {
