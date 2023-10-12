@@ -11,13 +11,25 @@ import { Button } from '../../components/Button'
 
 export function Profile() {
 	// pegar do estado qual o valor do usuário autenticado armazenado no contexto:
-	const { user } = useAuth()
+	const { user, updateProfile } = useAuth()
 
 	const [name, setName] = useState(user.name)
 	const [email, setEmail] = useState(user.email)
 	const [passwordOld, setPasswordOld] = useState()
 	const [passwordNew, setPasswordNew] = useState()
 	// password fica vazio por questão de segurança, se fulano quiser mudar, digita as 2.
+	
+	async function handleUpdate() {
+		// await updateProfile({}) precisamos mandar as informações num objeto chamado user:
+		const user = {
+			name,
+			email,
+			password: passwordNew,
+			old_password: passwordOld
+		}
+
+		await updateProfile({ user })
+	}
 
   return(
     <Container>
@@ -42,7 +54,7 @@ export function Profile() {
         <Input placeholder="Senha atual" type="password" required icon={FiLock} onChange={e => setPasswordOld(e.target.value)}/>
         <Input placeholder="Nova senha" type="password" required icon={FiLock} onChange={e => setPasswordNew(e.target.value)}/>
 
-        <Button title="Salvar" />
+        <Button title="Salvar" onClick={handleUpdate} />
       </Form>
     </Container>
   )

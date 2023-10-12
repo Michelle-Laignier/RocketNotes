@@ -39,6 +39,23 @@ function AuthProvider({ children }) {
     // pra refletir nas rotas que vai mudar o estado e automaticamente sair do <AppRoutes/> e ir pro <AuthRoutes/>.
   }
 
+  // Pra atualizar os dados do usuário precisamos receber os dados do usuário através de um objeto chamado user.
+  async function updateProfile({ user }) {
+    try {
+      await api.put("/users", user)
+      localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
+      // Se a chave já existir no localStorage, usar o setItem pela segunda vez substitui o valor dela.
+      setData({ user, token:data.token })
+      alert("Perfil atualizado! :D")
+    } catch(error) {
+      if(error.response) {
+        alert(error.response.data.message)
+      } else {
+        alert("Não foi possível atualizar o perfil. :(")
+      }
+    }
+  }
+
   useEffect(() => {
     // o que vai ser executado após a renderização do componente
   }, [])
@@ -61,7 +78,7 @@ function AuthProvider({ children }) {
   }, [])
 
   return(
-    <AuthContext.Provider value={{ signIn, user:data.user, signOut }}> {/* user:data.user === dados do usuário */}
+    <AuthContext.Provider value={{ signIn, signOut, updateProfile, user:data.user, }}> {/* user:data.user === dados do usuário */}
       {children}
     </AuthContext.Provider>
   )
