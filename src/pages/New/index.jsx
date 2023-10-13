@@ -28,10 +28,10 @@ export function New() {
 		setNewLink("") // Pra ter o estado "resetado" de novo
 	}
 
-	function handleRemoveLink(deleted) {
+	function handleRemoveLink(deletedLink) {
 		const isOk = confirm("Remover esse link?")
 		if(isOk) {
-			setLinks(prevState => prevState.filter(link => link !== deleted))
+			setLinks(prevState => prevState.filter(link => link !== deletedLink))
 		}
 	}
 
