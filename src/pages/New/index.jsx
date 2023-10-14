@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { api } from '../../services/api'
 
 import { Container, Form } from './styles'
 
@@ -11,6 +13,9 @@ import { Section } from '../../components/Section'
 import { Button } from '../../components/Button'
 
 export function New() {
+	const [title, setTitle] = useState("")
+	const [description, setDescription] = useState("")
+
 	// Pra guardar todos os links:
 	const [links, setLinks] = useState([])
 	// Pra guardar o novo link que vai ser adicionado:
@@ -19,9 +24,15 @@ export function New() {
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState("")
 
+	const navigate = useNavigate()
+
 	function handleAddLink() {
 		if(!newLink) {
 			return
+		}
+
+		if(newLink.length > 0 && !newLink.includes("http")) {
+			return alert("Adicione um link válido. Exemplo: http://site_de_exemplo.com")
 		}
 
 		// Pode ser qualquer nome no lugar de prevState
@@ -47,15 +58,43 @@ export function New() {
 			return
 		}
 
+		if(newTag.length > 0 && tags.includes(newTag)) {
+			return alert(`O marcador ${newTag} já existe.`)
+		}
+
 		setTags(prevState => [...prevState, newTag])
 		setNewTag("")
 	}
 
 	function handleRemoveTag(deletedTag) {
-		const isOk = confirm("Remover essa tag?")
+		const isOk = confirm("Remover esse marcador?")
 		if(isOk) {
 			setTags(prevState => prevState.filter(tag => tag !== deletedTag))
 		}
+	}
+
+	async function handleNewNote() {
+		if(newLink.length > 0 && !links.includes(newLink)) {
+			return alert("Clique no + para salvar o link.")
+		} else if(newTag.length > 0 && !tags.includes(newTag)) {
+			return alert("Clique no + para salvar o marcador.")
+		}
+
+		if(!title || !links || !tags) {
+			return alert(`É obrigatório: Título, link (mínimo 1) e marcador (mínimo 1)`)
+		}
+
+
+		await api.post("/notes", {
+			title,
+			description,
+			tags,
+			links
+		})
+
+		alert("Nota criada com sucesso! :D")
+		navigate("/")
+
 	}
 
   return(
@@ -69,14 +108,14 @@ export function New() {
 						<Link to="/">voltar</Link>
 					</header>
 
-					<Input placeholder="Título"/>
-					<TextArea placeholder="Observações"/>
+					<Input placeholder="Título" value={title} onChange={e => setTitle(e.target.value)}/>
+					<TextArea placeholder="Observações" value={description} onChange={e => setDescription(e.target.value)}/>
 
 					<Section title="Links úteis">
 						{
 							links.map((link, index) => ( // index é a posição do elemento na lista
 								<NoteItem
-								  key={String(index)} // Sempre que tem um componente renderizado por uma lista, precisa da propriedade key
+									key={String(index)} // Sempre que tem um componente renderizado por uma lista, precisa da propriedade key
 									value={link} // Pegar o valor de cada link
 									onClick={() => handleRemoveLink(link)}
 									// Quando quiser passar -parâmetros- tem que usar essa estrutura {() => {}} em vez de só {nome_da_função}
@@ -92,7 +131,7 @@ export function New() {
 							{
 							tags.map((tag, index) => ( // index é a posição do elemento na lista
 								<NoteItem
-								  key={String(index)}
+									key={String(index)}
 									value={tag}
 									onClick={() => handleRemoveTag(tag)}
 								/>
@@ -102,7 +141,7 @@ export function New() {
 						</div>
 					</Section>
 
-					<Button title="Salvar"/>
+					<Button title="Salvar" onClick={handleNewNote}/>
 				</Form>
       </main>
     </Container>
