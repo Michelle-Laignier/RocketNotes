@@ -53,6 +53,19 @@ export const Menu = styled.ul`
         margin-bottom: 24px;
     }
 
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.COLORS.GRAY_300};
+        border-radius: 12px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+        border-radius: 12px;
+    }
+
 `
 
 export const Search = styled.div`
