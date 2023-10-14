@@ -16,6 +16,9 @@ export function New() {
 	// Pra guardar o novo link que vai ser adicionado:
 	const [newLink, setNewLink] = useState("")
 
+	const [tags, setTags] = useState([])
+	const [newTag, setNewTag] = useState("")
+
 	function handleAddLink() {
 		if(!newLink) {
 			return
@@ -25,13 +28,33 @@ export function New() {
 		setLinks(prevState => [...prevState, newLink]) // imutabilidade
 		// setLinks(newLink) assim vai ficar só o link mais recente
 
+		// (prevState => [...prevState, newLink])
+		// sem o spread operator fica uma lista dentro de outra lista
+		// ["react", "nodejs"] => [ ["react", "nodejs"], "express"]
+
 		setNewLink("") // Pra ter o estado "resetado" de novo
 	}
 
 	function handleRemoveLink(deletedLink) {
 		const isOk = confirm("Remover esse link?")
 		if(isOk) {
-			setLinks(prevState => prevState.filter(link => link !== deletedLink))
+			setLinks(prevState => prevState.filter(link => link !== deletedLink)) // todos os links menos oque to deletando
+		}
+	}
+	
+	function handleAddTag() {
+		if(!newTag) {
+			return
+		}
+
+		setTags(prevState => [...prevState, newTag])
+		setNewTag("")
+	}
+
+	function handleRemoveTag(deletedTag) {
+		const isOk = confirm("Remover essa tag?")
+		if(isOk) {
+			setTags(prevState => prevState.filter(tag => tag !== deletedTag))
 		}
 	}
 
@@ -66,8 +89,16 @@ export function New() {
 
 					<Section title="Marcadores" className='marcadores'>
 						<div className='tags' >
-							<NoteItem value="React"/>
-							<NoteItem isNew placeholder="Novo marcador"/>
+							{
+							tags.map((tag, index) => ( // index é a posição do elemento na lista
+								<NoteItem
+								  key={String(index)}
+									value={tag}
+									onClick={() => handleRemoveTag(tag)}
+								/>
+							))
+						}
+							<NoteItem isNew placeholder="Novo marcador" value={newTag} onChange={e => setNewTag(e.target.value)} onClick={handleAddTag}/>
 						</div>
 					</Section>
 
