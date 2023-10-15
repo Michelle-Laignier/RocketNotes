@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { api } from '../../services/api'
 
@@ -18,6 +18,8 @@ export function Home() {
 	const [tagsSelected, setTagsSelected] = useState([])
 	const [notes, setNotes] = useState([])
 
+	const navigate = useNavigate()
+
 	function handleTagSelected(tagName) {
 		// Quando clicar em "Todos", desmarca tudo e volta pro "Todos"
 		if(tagName === "all") {
@@ -32,6 +34,10 @@ export function Home() {
 		} else {
 			setTagsSelected(prevStateTag => [...prevStateTag, tagName])
 		}
+	}
+
+	function handleDetails(noteId) {
+		navigate(`/details/${noteId}`)
 	}
 
 	// pras tags
@@ -81,7 +87,7 @@ export function Home() {
 				<Section title="Minhas notas">
 					{
 						notes.map(note => (
-								<Note key={String(note.id)} data={note}/>
+								<Note key={String(note.id)} data={note} onClick={() => handleDetails(note.id)}/>
 						))
 					}
 				</Section>
