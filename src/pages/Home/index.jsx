@@ -13,10 +13,17 @@ import { Note } from '../../components/Note'
 import { ButtonText } from '../../components/ButtonText'
 
 export function Home() {
+	const [search, setSearch] = useState("")
 	const [tags, setTags] = useState([])
 	const [tagsSelected, setTagsSelected] = useState([])
+	const [notes, setNotes] = useState([])
 
 	function handleTagSelected(tagName) {
+		// Quando clicar em "Todos", desmarca tudo e volta pro "Todos"
+		if(tagName === "all") {
+			return setTagsSelected([])
+		}
+
 		const alreadySelected = tagsSelected.includes(tagName)
 
 		if(alreadySelected) {
@@ -27,6 +34,7 @@ export function Home() {
 		}
 	}
 
+	// pras tags
 	useEffect(() => {
 		async function fetchTags() {
 			const response = await api.get("/tags")
@@ -35,6 +43,16 @@ export function Home() {
 
 		fetchTags()
 	}, [])
+
+	// pra barra de pesquisa
+	useEffect(() => {
+		async function fetchNotes() {
+			const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`)
+			setNotes(response.data)
+		}
+
+		fetchNotes()
+	}, [tagsSelected, search])
 
   return(
     <Container>
@@ -56,31 +74,16 @@ export function Home() {
 			</Menu>
 
 			<Search>
-				<Input placeholder="Pesquisar pelo título" />
+				<Input placeholder="Pesquisar pelo título" onChange={(e) => setSearch(e.target.value)} />
 			</Search>
 
 			<Content>
 				<Section title="Minhas notas">
-					<Link to="/details/:01">
-						<Note data={{
-							title: 'React Modal', 
-							tags: [
-								{id: '1', name: 'React'}
-							]
-						}}
-						/>
-					</Link>
-
-					<Link to="/details/:02">
-						<Note data={{
-							title: 'Exemplo de Middleware', 
-							tags: [
-								{id: '1', name: 'express'},
-								{id: '2', name: 'nodejs'}
-							]
-						}}
-						/>
-					</Link>
+					{
+						notes.map(note => (
+								<Note key={String(note.id)} data={note}/>
+						))
+					}
 				</Section>
 			</Content>
 
