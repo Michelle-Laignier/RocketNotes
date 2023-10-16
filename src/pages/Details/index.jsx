@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 import { api } from '../../services/api'
 
@@ -14,6 +14,7 @@ import { Tag } from '../../components/Tag'
 export function Details() {
   const [data, setData] = useState(null)
   const params = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchNote() {
@@ -24,6 +25,14 @@ export function Details() {
     fetchNote()
   }, [])
 
+  async function deleteNote() {
+    const isOk = confirm("Excluir a nota?")
+    if(isOk) {
+      await api.delete(`/notes/${params.id}`)
+      navigate("/")
+    }
+  }
+
   return (
     <Container>
       <Header/>
@@ -32,7 +41,7 @@ export function Details() {
         data &&
         <main>
           <Content>
-            <ButtonText title="Excluir a nota" />
+            <ButtonText title="Excluir a nota" onClick={deleteNote}/>
 
             <h1>{data.title}</h1>
             <p>{data.description}</p>
