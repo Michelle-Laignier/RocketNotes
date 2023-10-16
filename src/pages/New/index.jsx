@@ -80,10 +80,9 @@ export function New() {
 			return alert("Clique no + para salvar o marcador.")
 		}
 
-		if(!title || !links || !tags) {
+		if(!title || links.length === 0 || tags.length === 0) {
 			return alert(`É obrigatório: Título, link (mínimo 1) e marcador (mínimo 1)`)
 		}
-
 
 		await api.post("/notes", {
 			title,
@@ -94,7 +93,6 @@ export function New() {
 
 		alert("Nota criada com sucesso! :D")
 		navigate("/")
-
 	}
 
   return(
