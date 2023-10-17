@@ -2,5 +2,5 @@
 import axios from "axios"
 
 export const api = axios.create({
-  baseURL: "http://localhost:3333" // parte do endereço do back que sempre se repete
+  baseURL: "https://rocketnotes-api-qev3.onrender.com" // parte do endereço do back que sempre se repete
 })
