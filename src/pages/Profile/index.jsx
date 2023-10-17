@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FiMail, FiLock, FiUser, FiArrowLeft, FiCamera} from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from "../../hooks/auth"
 
@@ -25,17 +25,21 @@ export function Profile() {
 	const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 	const [avatar, setAvatar] = useState(avatarUrl) // img do user, se já existir
 	const [avatarFile, setAvatarFile] = useState(null) // img nova que o user fizer upload
+
+	const navigate = useNavigate()
 	
 	async function handleUpdate() {
 		// await updateProfile({}) precisamos mandar as informações num objeto chamado user:
-		const user = {
+		const updated = {
 			name,
 			email,
 			password: passwordNew,
 			old_password: passwordOld
 		}
 
-		await updateProfile({ user, avatarFile })
+		// pra não perder a foto de perfil quando alterar o nome de usuário:
+		const userUpdated = Object.assign(user, updated)
+		await updateProfile({ user: userUpdated, avatarFile })
 	}
 
 	function handleChangeAvatar(event) { // evento de alteração do avatar
@@ -48,12 +52,16 @@ export function Profile() {
 		setAvatar(imagePreview)
 	}
 
+	function handleBack() {
+    navigate(-1)
+  }
+
   return(
     <Container>
 			<header>
-				<Link to="/">
+				<button type="button" onClick={handleBack}>
 					<FiArrowLeft/>
-				</Link>
+				</button>
 			</header>
 
       <Form>

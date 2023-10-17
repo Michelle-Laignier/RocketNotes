@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { api } from '../../services/api'
 
@@ -29,8 +29,12 @@ export function Details() {
     const isOk = confirm("Excluir a nota?")
     if(isOk) {
       await api.delete(`/notes/${params.id}`)
-      navigate("/")
+      navigate(-1)
     }
+  }
+
+  function handleBack() {
+    navigate(-1)
   }
 
   return (
@@ -69,10 +73,8 @@ export function Details() {
                 }
               </Section>
             }
-
-            <Link to="/">
-              <Button title="Voltar"/>
-            </Link>
+            
+            <Button title="Voltar" onClick={handleBack}/>
           </Content>
         </main>
       }

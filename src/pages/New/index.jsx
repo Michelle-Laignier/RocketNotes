@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { api } from '../../services/api'
 
@@ -11,6 +11,7 @@ import { TextArea} from '../../components/TextArea'
 import { NoteItem } from '../../components/NoteItem'
 import { Section } from '../../components/Section'
 import { Button } from '../../components/Button'
+import { ButtonText } from '../../components/ButtonText'
 
 export function New() {
 	const [title, setTitle] = useState("")
@@ -92,7 +93,11 @@ export function New() {
 		})
 
 		alert("Nota criada com sucesso! :D")
-		navigate("/")
+		navigate(-1)
+	}
+
+	function handleBack() {
+		navigate(-1)
 	}
 
   return(
@@ -103,7 +108,7 @@ export function New() {
         <Form>
 					<header>
 						<h1>Criar nota</h1>
-						<Link to="/">voltar</Link>
+						<ButtonText title="voltar" type='button' onClick={handleBack}></ButtonText>
 					</header>
 
 					<Input placeholder="Título" value={title} onChange={e => setTitle(e.target.value)}/>
@@ -127,14 +132,14 @@ export function New() {
 					<Section title="Marcadores" className='marcadores'>
 						<div className='tags' >
 							{
-							tags.map((tag, index) => ( // index é a posição do elemento na lista
-								<NoteItem
-									key={String(index)}
-									value={tag}
-									onClick={() => handleRemoveTag(tag)}
-								/>
-							))
-						}
+								tags.map((tag, index) => ( // index é a posição do elemento na lista
+									<NoteItem
+										key={String(index)}
+										value={tag}
+										onClick={() => handleRemoveTag(tag)}
+									/>
+								))
+							}
 							<NoteItem isNew placeholder="Novo marcador" value={newTag} onChange={e => setNewTag(e.target.value)} onClick={handleAddTag}/>
 						</div>
 					</Section>
