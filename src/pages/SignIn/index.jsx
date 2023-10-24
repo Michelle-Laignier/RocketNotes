@@ -8,7 +8,7 @@ import { useAuth } from '../../hooks/auth'
 import { Container, Form, Img } from './styles'
 
 import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
+import { Buttonb } from '../../components/Buttonb'
 
 export function SignIn() {
   const [email, setEmail] = useState("")
@@ -30,7 +30,7 @@ export function SignIn() {
         <Input placeholder="E-mail" type="email" required icon={FiMail} onChange={e => setEmail(e.target.value)}/>
         <Input placeholder="Senha" type="password" required icon={FiLock} onChange={e => setPassword(e.target.value)}/>
 
-        <Button title="Entrar" onClick={handleSignIn}/>
+        <Buttonb title="Entrar" onClick={handleSignIn}/>
 				<Link to="/register"> Criar conta</Link>
       </Form>
 

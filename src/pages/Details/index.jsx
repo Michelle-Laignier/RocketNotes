@@ -6,7 +6,7 @@ import { api } from '../../services/api'
 import { Container, Links, Content } from "./styles"
 
 import { Header } from '../../components/Header'
-import { Button } from '../../components/Button'
+import { Buttonb } from '../../components/Buttonb'
 import { ButtonText } from '../../components/ButtonText'
 import { Section } from '../../components/Section'
 import { Tag } from '../../components/Tag'
@@ -74,7 +74,7 @@ export function Details() {
               </Section>
             }
             
-            <Button title="Voltar" onClick={handleBack}/>
+            <Buttonb title="Voltar" onClick={handleBack}/>
           </Content>
         </main>
       }

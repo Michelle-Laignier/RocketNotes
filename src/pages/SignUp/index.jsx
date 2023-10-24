@@ -7,7 +7,7 @@ import { api } from '../../services/api'
 import { Container, Form, Img } from './styles'
 
 import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
+import { Buttonb } from '../../components/Buttonb'
 import { ButtonText } from '../../components/ButtonText'
 
 export function SignUp() {
@@ -60,7 +60,7 @@ export function SignUp() {
         <Input placeholder="E-mail" type="email" required icon={FiMail} onChange={e => setEmail(e.target.value)} />
         <Input placeholder="Senha" type="password" required icon={FiLock} onChange={e => setPassword(e.target.value)} />
 
-        <Button title="Cadastrar" onClick={handleSignUp} />
+        <Buttonb title="Cadastrar" onClick={handleSignUp} />
 				<ButtonText title="Voltar para o login" onClick={handleBack}></ButtonText>
       </Form>
     </Container>

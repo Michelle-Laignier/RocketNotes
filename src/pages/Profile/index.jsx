@@ -10,7 +10,7 @@ import avatarPlaceholder from "../../assets/avatar_placeholder.svg"
 import { Container, Form, Avatar } from './styles'
 
 import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
+import { Buttonb } from '../../components/Buttonb'
 
 export function Profile() {
 	// pegar do estado qual o valor do usuário autenticado armazenado no contexto:
@@ -79,7 +79,7 @@ export function Profile() {
         <Input placeholder="Senha atual" type="password" required icon={FiLock} onChange={e => setPasswordOld(e.target.value)}/>
         <Input placeholder="Nova senha" type="password" required icon={FiLock} onChange={e => setPasswordNew(e.target.value)}/>
 
-        <Button title="Salvar" onClick={handleUpdate} />
+        <Buttonb title="Salvar" onClick={handleUpdate} />
       </Form>
     </Container>
   )

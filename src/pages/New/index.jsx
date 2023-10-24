@@ -10,7 +10,7 @@ import { Input } from '../../components/Input'
 import { TextArea} from '../../components/TextArea'
 import { NoteItem } from '../../components/NoteItem'
 import { Section } from '../../components/Section'
-import { Button } from '../../components/Button'
+import { Buttonb } from '../../components/Buttonb'
 import { ButtonText } from '../../components/ButtonText'
 
 export function New() {
@@ -144,7 +144,7 @@ export function New() {
 						</div>
 					</Section>
 
-					<Button title="Salvar" onClick={handleNewNote}/>
+					<Buttonb title="Salvar" onClick={handleNewNote}/>
 				</Form>
       </main>
     </Container>
