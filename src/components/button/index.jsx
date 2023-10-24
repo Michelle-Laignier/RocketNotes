@@ -1,6 +1,5 @@
 import { Container } from "./styles"
 
-{/*Pra recuperar uma propriedade passada: (props)*/}
 export function Button({ title, loading = false, ...rest }) {
     return (
         <Container 
@@ -12,4 +11,3 @@ export function Button({ title, loading = false, ...rest }) {
         </Container>
     )
 }
-{/* dentro do botão: crtl + space mostras todas as propriedades do botão*/}
